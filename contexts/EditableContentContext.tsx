@@ -33,7 +33,8 @@ export const EditableContentProvider: React.FC<{ children: ReactNode }> = ({ chi
             setIsEditMode(true);
         }
 
-        fetch(CONTENT_FILE_URL)
+        // Cache busting: Append a unique timestamp to prevent the browser from using an old cached version.
+        fetch(`${CONTENT_FILE_URL}?v=${new Date().getTime()}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
