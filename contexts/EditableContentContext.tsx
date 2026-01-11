@@ -33,8 +33,14 @@ export const EditableContentProvider: React.FC<{ children: ReactNode }> = ({ chi
             setIsEditMode(true);
         }
 
-        // Cache busting: Append a unique timestamp to prevent the browser from using an old cached version.
-        fetch(`${CONTENT_FILE_URL}?v=${new Date().getTime()}`)
+        // Agressive cache busting to ensure the latest content is always fetched.
+        fetch(`${CONTENT_FILE_URL}?v=${new Date().getTime()}`, {
+            cache: 'no-store', // Tells the browser not to use its cache
+            headers: {
+                'Pragma': 'no-cache', // HTTP 1.0 backward compatibility for proxies
+                'Cache-Control': 'no-store, no-cache, must-revalidate', // HTTP 1.1 cache control
+            },
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
