@@ -88,16 +88,24 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, on
         if (!previewCanvasRef.current) {
             return;
         }
-        const dataUrl = previewCanvasRef.current.toDataURL('image/jpeg');
+        // Save with 90% quality for a good balance
+        const dataUrl = previewCanvasRef.current.toDataURL('image/jpeg', 0.9);
         onSave(dataUrl);
     };
     
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            // Prevent large files from being uploaded. 4MB limit.
+            if (file.size > 4 * 1024 * 1024) {
+                alert('A imagem é muito grande! Por favor, escolha um arquivo menor que 4MB.');
+                return;
+            }
+
             setCrop(undefined); // Reset crop on new image
             const reader = new FileReader();
             reader.addEventListener('load', () => setImgSrc(reader.result?.toString() || ''));
-            reader.readAsDataURL(e.target.files[0]);
+            reader.readAsDataURL(file);
         }
     };
 
@@ -155,6 +163,7 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, on
                                     style={{
                                         objectFit: 'contain',
                                         width: completedCrop ? `${completedCrop.width}px` : 'auto',
+                                        // FIX: Corrected a typo from `completed-crop` to `completedCrop`.
                                         height: completedCrop ? `${completedCrop.height}px` : 'auto',
                                         maxWidth: '100%',
                                         maxHeight: '200px',
