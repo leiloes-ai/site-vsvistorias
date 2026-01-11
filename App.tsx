@@ -12,7 +12,8 @@ import TestimonialsSection from './components/sections/TestimonialsSection';
 import ContactSection from './components/sections/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
-import { EditModeProvider } from './contexts/EditModeContext';
+import { EditableContentProvider, useEditableContent } from './contexts/EditableContentContext';
+import AdminPanel from './components/AdminPanel';
 
 export interface SectionRefs {
   home: React.RefObject<HTMLDivElement>;
@@ -24,7 +25,8 @@ export interface SectionRefs {
   contact: React.RefObject<HTMLDivElement>;
 }
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const { isEditMode, content, loading } = useEditableContent();
   const sectionRefs: SectionRefs = {
     home: useRef<HTMLDivElement>(null),
     about: useRef<HTMLDivElement>(null),
@@ -47,41 +49,58 @@ const App: React.FC = () => {
     scrollToSection(sectionRefs.services);
   };
 
+  if (loading) {
+    return (
+        <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
+            <div className="text-2xl font-bold">Carregando V.S Vistorias...</div>
+        </div>
+    );
+  }
+
   return (
-    <EditModeProvider>
-      <div className="bg-white text-gray-800">
-        <Header sectionRefs={sectionRefs} scrollToSection={scrollToSection} />
-        <main>
-          <div ref={sectionRefs.home}>
-            <HeroSection onScheduleClick={handleScheduleClick} />
-          </div>
-          <ClientsSection />
-          <ServicesHighlightSection onViewServicesClick={handleViewServicesClick}/>
-          <div ref={sectionRefs.about}>
-            <AboutSection />
-          </div>
-          <StatsSection />
-          <div ref={sectionRefs.services}>
-            <ServicesDetailSection onScheduleClick={handleScheduleClick}/>
-          </div>
-          <div ref={sectionRefs.howItWorks}>
-            <HowItWorksSection />
-          </div>
-          <div ref={sectionRefs.differentiators}>
-            <DifferentiatorsSection />
-          </div>
-          <div ref={sectionRefs.testimonials}>
-            <TestimonialsSection />
-          </div>
-          <div ref={sectionRefs.contact}>
-            <ContactSection />
-          </div>
-        </main>
-        <Footer />
-        <WhatsAppButton />
-      </div>
-    </EditModeProvider>
+    <div className="bg-white text-gray-800">
+      <Header sectionRefs={sectionRefs} scrollToSection={scrollToSection} />
+      <main>
+        <div ref={sectionRefs.home}>
+          <HeroSection onScheduleClick={handleScheduleClick} />
+        </div>
+        <ClientsSection />
+        <ServicesHighlightSection onViewServicesClick={handleViewServicesClick}/>
+        <div ref={sectionRefs.about}>
+          <AboutSection />
+        </div>
+        <StatsSection />
+        <div ref={sectionRefs.services}>
+          <ServicesDetailSection onScheduleClick={handleScheduleClick}/>
+        </div>
+        <div ref={sectionRefs.howItWorks}>
+          <HowItWorksSection />
+        </div>
+        <div ref={sectionRefs.differentiators}>
+          <DifferentiatorsSection />
+        </div>
+        <div ref={sectionRefs.testimonials}>
+          <TestimonialsSection />
+        </div>
+        <div ref={sectionRefs.contact}>
+          <ContactSection />
+        </div>
+      </main>
+      <Footer />
+      <WhatsAppButton />
+      {isEditMode && <AdminPanel />}
+    </div>
+  );
+}
+
+
+const App: React.FC = () => {
+  return (
+    <EditableContentProvider>
+      <AppContent />
+    </EditableContentProvider>
   );
 };
+
 
 export default App;

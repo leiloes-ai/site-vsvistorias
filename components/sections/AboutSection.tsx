@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
-import { AppImages } from '../../assets/images';
-import { useEditMode } from '../../contexts/EditModeContext';
+import { useEditableContent } from '../../contexts/EditableContentContext';
 import ImageEditorModal from '../ImageEditorModal';
 
 const ValueCard: React.FC<{ title: string; }> = ({ title }) => (
@@ -12,14 +11,24 @@ const ValueCard: React.FC<{ title: string; }> = ({ title }) => (
 
 const AboutSection: React.FC = () => {
     const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.2 });
-    const { isEditMode } = useEditMode();
-    const [teamImageSrc, setTeamImageSrc] = useState(AppImages.aboutTeam.src);
+    const { isEditMode, content, setContent } = useEditableContent();
     const [isEditorOpen, setIsEditorOpen] = useState(false);
 
     const handleSaveImage = (newImageSrc: string) => {
-        setTeamImageSrc(newImageSrc);
+        setContent(prevContent => {
+          if (!prevContent) return null;
+          return {
+            ...prevContent,
+            aboutTeam: {
+                ...prevContent.aboutTeam,
+                src: newImageSrc,
+            },
+          }
+        });
         setIsEditorOpen(false);
     };
+    
+    if (!content) return null;
 
   return (
     <>
@@ -28,8 +37,8 @@ const AboutSection: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div className={`relative group fade-in-up ${isVisible ? 'is-visible' : ''}`}>
               <img 
-                src={teamImageSrc}
-                alt={AppImages.aboutTeam.alt}
+                src={content.aboutTeam.src}
+                alt={content.aboutTeam.alt}
                 className="rounded-lg shadow-2xl w-full h-auto object-cover"
               />
               {isEditMode && (
@@ -89,12 +98,12 @@ const AboutSection: React.FC = () => {
           </div>
         </div>
       </section>
-      {isEditorOpen && (
+      {isEditorOpen && content && (
         <ImageEditorModal
           isOpen={isEditorOpen}
           onClose={() => setIsEditorOpen(false)}
           onSave={handleSaveImage}
-          initialImageSrc={teamImageSrc}
+          initialImageSrc={content.aboutTeam.src}
         />
       )}
     </>

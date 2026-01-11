@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CTAButton from '../CTAButton';
-import { AppImages } from '../../assets/images';
-import { useEditMode } from '../../contexts/EditModeContext';
+import { useEditableContent } from '../../contexts/EditableContentContext';
 import ImageEditorModal from '../ImageEditorModal';
 
 interface HeroSectionProps {
@@ -10,8 +9,7 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ onScheduleClick }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { isEditMode } = useEditMode();
-  const [heroImageSrc, setHeroImageSrc] = useState(AppImages.heroBackground.src);
+  const { isEditMode, content, setContent } = useEditableContent();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   
   useEffect(() => {
@@ -20,9 +18,20 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScheduleClick }) => {
   }, []);
 
   const handleSaveImage = (newImageSrc: string) => {
-    setHeroImageSrc(newImageSrc);
+    setContent(prevContent => {
+      if (!prevContent) return null;
+      return {
+        ...prevContent,
+        heroBackground: {
+          ...prevContent.heroBackground,
+          src: newImageSrc,
+        },
+      }
+    });
     setIsEditorOpen(false);
   };
+  
+  if (!content) return null;
 
 
   return (
@@ -30,8 +39,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScheduleClick }) => {
       <section className="relative h-screen min-h-[700px] text-white flex items-center bg-gray-900 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
         <img 
-          src={heroImageSrc}
-          alt={AppImages.heroBackground.alt} 
+          src={content.heroBackground.src}
+          alt={content.heroBackground.alt} 
           className="absolute inset-0 w-full h-full object-cover ken-burns"
         />
         <div className="relative container mx-auto px-6 z-10">
@@ -64,7 +73,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScheduleClick }) => {
           isOpen={isEditorOpen}
           onClose={() => setIsEditorOpen(false)}
           onSave={handleSaveImage}
-          initialImageSrc={heroImageSrc}
+          initialImageSrc={content.heroBackground.src}
         />
       )}
     </>
