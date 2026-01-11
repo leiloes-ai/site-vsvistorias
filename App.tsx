@@ -12,6 +12,7 @@ import TestimonialsSection from './components/sections/TestimonialsSection';
 import ContactSection from './components/sections/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import { EditModeProvider } from './contexts/EditModeContext';
 
 export interface SectionRefs {
   home: React.RefObject<HTMLDivElement>;
@@ -42,38 +43,44 @@ const App: React.FC = () => {
     scrollToSection(sectionRefs.contact);
   };
 
+  const handleViewServicesClick = () => {
+    scrollToSection(sectionRefs.services);
+  };
+
   return (
-    <div className="bg-white text-gray-800">
-      <Header sectionRefs={sectionRefs} scrollToSection={scrollToSection} />
-      <main>
-        <div ref={sectionRefs.home}>
-          <HeroSection onScheduleClick={handleScheduleClick} />
-        </div>
-        <ClientsSection />
-        <ServicesHighlightSection onScheduleClick={handleScheduleClick}/>
-        <div ref={sectionRefs.about}>
-          <AboutSection />
-        </div>
-        <StatsSection />
-        <div ref={sectionRefs.services}>
-          <ServicesDetailSection onScheduleClick={handleScheduleClick}/>
-        </div>
-        <div ref={sectionRefs.howItWorks}>
-          <HowItWorksSection />
-        </div>
-        <div ref={sectionRefs.differentiators}>
-          <DifferentiatorsSection />
-        </div>
-        <div ref={sectionRefs.testimonials}>
-          <TestimonialsSection />
-        </div>
-        <div ref={sectionRefs.contact}>
-          <ContactSection />
-        </div>
-      </main>
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    <EditModeProvider>
+      <div className="bg-white text-gray-800">
+        <Header sectionRefs={sectionRefs} scrollToSection={scrollToSection} />
+        <main>
+          <div ref={sectionRefs.home}>
+            <HeroSection onScheduleClick={handleScheduleClick} />
+          </div>
+          <ClientsSection />
+          <ServicesHighlightSection onViewServicesClick={handleViewServicesClick}/>
+          <div ref={sectionRefs.about}>
+            <AboutSection />
+          </div>
+          <StatsSection />
+          <div ref={sectionRefs.services}>
+            <ServicesDetailSection onScheduleClick={handleScheduleClick}/>
+          </div>
+          <div ref={sectionRefs.howItWorks}>
+            <HowItWorksSection />
+          </div>
+          <div ref={sectionRefs.differentiators}>
+            <DifferentiatorsSection />
+          </div>
+          <div ref={sectionRefs.testimonials}>
+            <TestimonialsSection />
+          </div>
+          <div ref={sectionRefs.contact}>
+            <ContactSection />
+          </div>
+        </main>
+        <Footer />
+        <WhatsAppButton />
+      </div>
+    </EditModeProvider>
   );
 };
 

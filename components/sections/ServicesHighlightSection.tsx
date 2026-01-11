@@ -17,10 +17,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description }) =
 );
 
 interface ServicesHighlightSectionProps {
-  onScheduleClick: () => void;
+  onViewServicesClick: () => void;
 }
 
-const ServicesHighlightSection: React.FC<ServicesHighlightSectionProps> = ({ onScheduleClick }) => {
+const ServicesHighlightSection: React.FC<ServicesHighlightSectionProps> = ({ onViewServicesClick }) => {
   const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.1 });
 
   const services = [
@@ -73,7 +73,7 @@ const ServicesHighlightSection: React.FC<ServicesHighlightSectionProps> = ({ onS
           ))}
         </div>
          <div className={`fade-in-up ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: `${services.length * 150}ms` }}>
-            <CTAButton onClick={onScheduleClick}>Conheça todos os serviços</CTAButton>
+            <CTAButton onClick={onViewServicesClick}>Conheça todos os serviços</CTAButton>
         </div>
       </div>
     </section>

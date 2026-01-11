@@ -65,7 +65,7 @@ const ContactSection: React.FC = () => {
               <textarea name="message" id="message" rows={4} className="mt-1 block w-full px-4 py-3 bg-white border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500" value={formData.message} onChange={handleChange}></textarea>
             </div>
             <div>
-              <CTAButton onClick={() => {}} className="w-full">Enviar Agendamento</CTAButton>
+              <CTAButton type="submit" onClick={() => {}} className="w-full">Enviar Agendamento</CTAButton>
             </div>
           </form>
 
