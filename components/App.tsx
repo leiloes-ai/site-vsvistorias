@@ -1,20 +1,21 @@
-import React, { useRef, useState } from 'react';
-import Header from './components/Header';
-import HeroSection from './components/sections/HeroSection';
-import ClientsSection from './components/sections/ClientsSection';
-import ServicesHighlightSection from './components/sections/ServicesHighlightSection';
-import AboutSection from './components/sections/AboutSection';
-import StatsSection from './components/sections/StatsSection';
-import HowItWorksSection from './components/sections/HowItWorksSection';
-import DifferentiatorsSection from './components/sections/DifferentiatorsSection';
-import ServicesDetailSection from './components/sections/ServicesDetailSection';
-import TestimonialsSection from './components/sections/TestimonialsSection';
-import ContactSection from './components/sections/ContactSection';
-import Footer from './components/Footer';
-import WhatsAppButton from './components/WhatsAppButton';
-import PortalArea from './components/portal/PortalArea';
-import { EditableContentProvider, useEditableContent } from './contexts/EditableContentContext';
-import AdminPanel from './components/AdminPanel';
+import React, { useRef, useState, useEffect } from 'react';
+import Header from './Header';
+import HeroSection from './sections/HeroSection';
+import ClientsSection from './sections/ClientsSection';
+import ServicesHighlightSection from './sections/ServicesHighlightSection';
+import AboutSection from './sections/AboutSection';
+import StatsSection from './sections/StatsSection';
+import HowItWorksSection from './sections/HowItWorksSection';
+import DifferentiatorsSection from './sections/DifferentiatorsSection';
+import ServicesDetailSection from './sections/ServicesDetailSection';
+import TestimonialsSection from './sections/TestimonialsSection';
+import ContactSection from './sections/ContactSection';
+import Footer from './Footer';
+import WhatsAppButton from './WhatsAppButton';
+import { EditableContentProvider, useEditableContent } from '../contexts/EditableContentContext';
+import AdminPanel from './AdminPanel';
+import WorkWithUsModal from './WorkWithUsModal';
+import ContactUsModal from './ContactUsModal';
 
 export interface SectionRefs {
   home: React.RefObject<HTMLDivElement>;
@@ -28,7 +29,8 @@ export interface SectionRefs {
 
 const AppContent: React.FC = () => {
   const { isEditMode, content, loading } = useEditableContent();
-  const [showPortal, setShowPortal] = useState(false);
+  const [isWorkWithUsModalOpen, setIsWorkWithUsModalOpen] = useState(false);
+  const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
   
   const sectionRefs: SectionRefs = {
     home: useRef<HTMLDivElement>(null),
@@ -52,11 +54,6 @@ const AppContent: React.FC = () => {
     scrollToSection(sectionRefs.services);
   };
 
-  const togglePortal = () => {
-    setShowPortal(!showPortal);
-    window.scrollTo(0, 0);
-  };
-
   if (loading) {
     return (
         <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
@@ -65,47 +62,52 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // Se o portal estiver ativo, renderiza apenas a área do portal
-  if (showPortal) {
-    return (
-      <div className="bg-slate-950 min-h-screen text-white">
-        <PortalArea onExit={togglePortal} />
-      </div>
-    );
-  }
-
   return (
     <div className="bg-white text-gray-800">
-      <Header sectionRefs={sectionRefs} scrollToSection={scrollToSection} onEnterPortal={togglePortal} />
+      <Header 
+        sectionRefs={sectionRefs} 
+        scrollToSection={scrollToSection} 
+        onScheduleClick={handleScheduleClick}
+        onWorkWithUsClick={() => setIsWorkWithUsModalOpen(true)}
+        onContactUsClick={() => setIsContactUsModalOpen(true)}
+      />
       <main>
         <div ref={sectionRefs.home}>
           <HeroSection onScheduleClick={handleScheduleClick} />
         </div>
         <ClientsSection />
         <ServicesHighlightSection onViewServicesClick={handleViewServicesClick}/>
-        <div ref={sectionRefs.about}>
+        <div ref={sectionRefs.about} className="scroll-target">
           <AboutSection />
         </div>
         <StatsSection />
-        <div ref={sectionRefs.services}>
+        <div ref={sectionRefs.services} className="scroll-target">
           <ServicesDetailSection onScheduleClick={handleScheduleClick}/>
         </div>
-        <div ref={sectionRefs.howItWorks}>
+        <div ref={sectionRefs.howItWorks} className="scroll-target">
           <HowItWorksSection />
         </div>
-        <div ref={sectionRefs.differentiators}>
+        <div ref={sectionRefs.differentiators} className="scroll-target">
           <DifferentiatorsSection />
         </div>
-        <div ref={sectionRefs.testimonials}>
+        <div ref={sectionRefs.testimonials} className="scroll-target">
           <TestimonialsSection />
         </div>
-        <div ref={sectionRefs.contact}>
+        <div ref={sectionRefs.contact} className="scroll-target">
           <ContactSection />
         </div>
       </main>
       <Footer />
       <WhatsAppButton />
       {isEditMode && <AdminPanel />}
+      <WorkWithUsModal 
+        isOpen={isWorkWithUsModalOpen} 
+        onClose={() => setIsWorkWithUsModalOpen(false)} 
+      />
+       <ContactUsModal
+        isOpen={isContactUsModalOpen}
+        onClose={() => setIsContactUsModalOpen(false)}
+      />
     </div>
   );
 }

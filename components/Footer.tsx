@@ -2,7 +2,7 @@ import React from 'react';
 import { useEditableContent } from '../contexts/EditableContentContext';
 
 const SocialIcon: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-600 transition-colors duration-300">
+    <a href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-500 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1">
         {children}
     </a>
 );
@@ -13,16 +13,16 @@ const Footer: React.FC = () => {
   if (!content) return null;
 
   return (
-    <footer className="bg-black text-white py-12 border-t border-gray-900">
+    <footer className="bg-premium-dark text-white py-8 border-t border-slate-800">
       <div className="max-w-[1600px] mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-center md:text-left">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-6 text-center md:text-left">
             <div className="md:col-span-1 mb-6 md:mb-0">
                 <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 mb-4">
                     {content.logo && (
                         <img 
                             src={content.logo.src} 
                             alt={content.logo.alt} 
-                            className="h-20 w-auto object-contain brightness-125" 
+                            className="h-16 w-auto object-contain brightness-125" 
                         />
                     )}
                     <h3 className="text-3xl font-bold text-red-600">
@@ -58,8 +58,8 @@ const Footer: React.FC = () => {
                 <p className="text-gray-300">Sábado: 8:00 - 12:00</p>
             </div>
         </div>
-        <div className="border-t border-gray-900 pt-8 mt-8">
-          <p className="text-gray-500 text-center">
+        <div className="border-t border-slate-800 pt-6 mt-6">
+          <p className="text-gray-500 text-center text-sm">
             &copy; {new Date().getFullYear()} V.S Vistorias. Todos os direitos reservados.
           </p>
         </div>

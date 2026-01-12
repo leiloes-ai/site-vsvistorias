@@ -22,7 +22,7 @@ const StatsSection: React.FC = () => {
     ];
 
     return (
-        <section ref={sectionRef} className="bg-slate-900 py-20">
+        <section ref={sectionRef} className="bg-premium-dark py-20">
             <div className="container mx-auto px-6">
                 <div className={`grid grid-cols-1 md:grid-cols-3 gap-12 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
                     {stats.map((stat, index) => (

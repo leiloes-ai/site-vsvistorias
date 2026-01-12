@@ -54,6 +54,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScheduleClick }) => {
             <CTAButton onClick={onScheduleClick}>Agendar Vistoria</CTAButton>
           </div>
         </div>
+        <div className="scroll-down-indicator" onClick={onScheduleClick} aria-label="Rolar para agendamento">
+          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 17l-4 4m0 0l-4-4m4 4V3"></path></svg>
+        </div>
         {isEditMode && (
           <button
             onClick={() => setIsEditorOpen(true)}

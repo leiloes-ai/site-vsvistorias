@@ -8,14 +8,14 @@ interface DifferentiatorCardProps {
 }
 
 const DifferentiatorCard: React.FC<DifferentiatorCardProps> = ({ icon, title, description }) => (
-  <div className="bg-slate-800 p-6 rounded-lg text-left transition-all duration-300 hover:bg-slate-700 hover:-translate-y-1 group border-l-4 border-slate-800 hover:border-red-600">
+  <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-xl text-left transition-all duration-500 ease-in-out hover:-translate-y-2 hover:scale-[1.02] group border-l-4 border-slate-700 hover:border-red-500 shadow-lg hover:shadow-2xl hover:shadow-black/30">
     <div className="flex items-start mb-4">
-      <div className="text-white bg-red-600 p-3 rounded-lg mr-4 mt-1">
+      <div className="text-white bg-red-600 p-3 rounded-lg mr-4 mt-1 transition-transform duration-300 group-hover:scale-110">
         {icon}
       </div>
       <div>
-         <h3 className="text-xl font-bold text-white mb-1">{title}</h3>
-         <p className="text-gray-400">{description}</p>
+         <h3 className="text-xl font-bold text-white mb-1 tracking-tight">{title}</h3>
+         <p className="text-gray-400 leading-relaxed">{description}</p>
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@ const DifferentiatorsSection: React.FC = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="bg-slate-900 py-20 overflow-hidden">
+    <section ref={sectionRef} className="bg-premium-dark py-20 overflow-hidden">
       <div className="container mx-auto px-6">
         <div className={`text-center mb-16 fade-in-up ${isVisible ? 'is-visible' : ''}`}>
           <h2 className="text-4xl font-bold text-white mb-4">Nossos Pilares de Qualidade</h2>

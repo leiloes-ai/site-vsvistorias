@@ -2,11 +2,11 @@ import React from 'react';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 const TestimonialCard: React.FC<{ quote: string; name: string; role: string;}> = ({ quote, name, role }) => (
-    <div className="bg-white p-8 rounded-lg shadow-lg h-full flex flex-col text-left">
+    <div className="bg-white p-8 rounded-xl shadow-lg h-full flex flex-col text-left border border-gray-200/80 hover:border-red-200 transition-all duration-300 hover:-translate-y-1">
         <svg className="w-10 h-10 text-red-100 mb-4 flex-shrink-0" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
             <path d="M9.333 8h-4.667c-1.473 0-2.667 1.194-2.667 2.667v9.333c0 1.473 1.194 2.667 2.667 2.667h6.667v-12h-4.667zM27.333 8h-4.667c-1.473 0-2.667 1.194-2.667 2.667v9.333c0 1.473 1.194 2.667 2.667 2.667h6.667v-12h-4.667z"></path>
         </svg>
-        <p className="text-gray-600 italic mb-6 flex-grow">"{quote}"</p>
+        <p className="text-gray-600 italic mb-6 flex-grow leading-relaxed">"{quote}"</p>
         <div className="flex-shrink-0">
             <p className="font-bold text-gray-900">{name}</p>
             <p className="text-sm text-red-600 font-semibold">{role}</p>

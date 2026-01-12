@@ -54,7 +54,7 @@ const HowItWorksSection: React.FC = () => {
           </p>
         </div>
         <div className="relative max-w-4xl mx-auto">
-          <div className="absolute left-6 top-0 bottom-0 w-1 bg-red-100 rounded-full hidden md:block"></div>
+          <div className="absolute left-6 top-0 bottom-0 w-1 bg-red-100 rounded-full hidden md:block origin-top transition-transform duration-1000 ease-out" style={{ transform: isVisible ? 'scaleY(1)' : 'scaleY(0)' }}></div>
             <div className="space-y-16">
                 {steps.map((step, index) => (
                     <StepCard key={step.number} {...step} isVisible={isVisible} delay={`${150 + index * 150}ms`} />

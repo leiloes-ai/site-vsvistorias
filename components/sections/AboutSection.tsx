@@ -60,7 +60,7 @@ const AboutSection: React.FC = () => {
             </div>
             <div className={`fade-in-up ${isVisible ? 'is-visible' : ''}`} style={{ transitionDelay: '150ms' }}>
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">Sobre</h2>
-              <div className="space-y-4 text-gray-600">
+              <div className="space-y-4 text-gray-600 leading-relaxed">
                   <p>
                       Fundada em 2016, na cidade de Goiânia, estado de Goiás, a V.S Vistorias atua na realização de vistorias veiculares com cobertura em todo o território nacional.
                   </p>
@@ -75,11 +75,11 @@ const AboutSection: React.FC = () => {
               <div className="mt-8 space-y-6">
                   <div>
                       <h3 className="text-xl font-bold text-gray-800 mb-2 text-red-600">Missão</h3>
-                      <p className="text-gray-600">Executar vistorias veiculares com rigor técnico, imparcialidade e conformidade normativa, garantindo laudos confiáveis em todo o território nacional.</p>
+                      <p className="text-gray-600 leading-relaxed">Executar vistorias veiculares com rigor técnico, imparcialidade e conformidade normativa, garantindo laudos confiáveis em todo o território nacional.</p>
                   </div>
                   <div>
                       <h3 className="text-xl font-bold text-gray-800 mb-2 text-red-600">Visão</h3>
-                      <p className="text-gray-600">Ser referência nacional em vistorias veiculares, reconhecida pela excelência técnica, credibilidade institucional e abrangência operacional.</p>
+                      <p className="text-gray-600 leading-relaxed">Ser referência nacional em vistorias veiculares, reconhecida pela excelência técnica, credibilidade institucional e abrangência operacional.</p>
                   </div>
               </div>
 

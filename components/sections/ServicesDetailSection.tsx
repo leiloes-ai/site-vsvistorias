@@ -94,7 +94,7 @@ const ServicesDetailSection: React.FC<ServicesDetailSectionProps> = ({ onSchedul
     if (!content) return null;
 
   return (
-    <section className="bg-slate-900 py-20 overflow-hidden">
+    <section className="bg-premium-dark py-20 overflow-hidden">
       <div className="container mx-auto px-6">
         <div ref={headerRef} className={`text-center mb-16 fade-in-up ${isHeaderVisible ? 'is-visible' : ''}`}>
           <h2 className="text-4xl font-bold text-white mb-4">Serviços Especializados</h2>
