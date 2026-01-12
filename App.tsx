@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/sections/HeroSection';
 import ClientsSection from './components/sections/ClientsSection';
@@ -12,6 +12,7 @@ import TestimonialsSection from './components/sections/TestimonialsSection';
 import ContactSection from './components/sections/ContactSection';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import PortalArea from './components/portal/PortalArea';
 import { EditableContentProvider, useEditableContent } from './contexts/EditableContentContext';
 import AdminPanel from './components/AdminPanel';
 
@@ -27,6 +28,8 @@ export interface SectionRefs {
 
 const AppContent: React.FC = () => {
   const { isEditMode, content, loading } = useEditableContent();
+  const [showPortal, setShowPortal] = useState(false);
+  
   const sectionRefs: SectionRefs = {
     home: useRef<HTMLDivElement>(null),
     about: useRef<HTMLDivElement>(null),
@@ -49,17 +52,31 @@ const AppContent: React.FC = () => {
     scrollToSection(sectionRefs.services);
   };
 
+  const togglePortal = () => {
+    setShowPortal(!showPortal);
+    window.scrollTo(0, 0);
+  };
+
   if (loading) {
     return (
         <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
-            <div className="text-2xl font-bold">Carregando V.S Vistorias...</div>
+            <div className="text-2xl font-bold italic">Carregando V.S Vistorias...</div>
         </div>
+    );
+  }
+
+  // Se o portal estiver ativo, renderiza apenas a área do portal
+  if (showPortal) {
+    return (
+      <div className="bg-slate-950 min-h-screen text-white">
+        <PortalArea onExit={togglePortal} />
+      </div>
     );
   }
 
   return (
     <div className="bg-white text-gray-800">
-      <Header sectionRefs={sectionRefs} scrollToSection={scrollToSection} />
+      <Header sectionRefs={sectionRefs} scrollToSection={scrollToSection} onEnterPortal={togglePortal} />
       <main>
         <div ref={sectionRefs.home}>
           <HeroSection onScheduleClick={handleScheduleClick} />
@@ -93,7 +110,6 @@ const AppContent: React.FC = () => {
   );
 }
 
-
 const App: React.FC = () => {
   return (
     <EditableContentProvider>
@@ -101,6 +117,5 @@ const App: React.FC = () => {
     </EditableContentProvider>
   );
 };
-
 
 export default App;

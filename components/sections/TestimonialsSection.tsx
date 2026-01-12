@@ -27,12 +27,12 @@ const TestimonialsSection: React.FC = () => {
         {
             quote: 'Gerenciamos uma grande frota e a parceria com a V.S Vistorias otimizou nossos processos de avaliação e venda de ativos. Agilidade e confiança definem o serviço.',
             name: 'Carlos Almeida',
-            role: 'Gerente de Frotas, Frota XYZ',
+            role: 'Gerente de Frotas, Frota São Luis',
         },
         {
             quote: 'Para nossos leilões, a precisão dos laudos é fundamental. A V.S Vistorias entrega um trabalho de excelência, com padronização e credibilidade que valorizam os lotes.',
             name: 'Fernanda Lima',
-            role: 'Coordenadora, Leilões Exemplo',
+            role: 'Coordenadora, Leilões SuperBid',
         },
     ];
 
