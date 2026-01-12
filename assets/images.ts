@@ -1,4 +1,8 @@
 export const AppImages = {
+  logo: {
+    src: 'https://placehold.co/400x400/white/e53e3e?text=VS',
+    alt: 'Logo V.S Vistorias - Lupa e Veículo',
+  },
   heroBackground: {
     src: 'https://placehold.co/1920x1080/1a202c/e53e3e?text=V.S+Vistorias',
     alt: 'Mecânico profissional inspecionando o motor de um carro com uma lanterna, foco nos detalhes técnicos da vistoria.',

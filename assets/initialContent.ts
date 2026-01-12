@@ -52,6 +52,7 @@ const initialServicesData = [
 ];
 
 export const initialContent = {
+  logo: AppImages.logo,
   heroBackground: AppImages.heroBackground,
   aboutTeam: AppImages.aboutTeam,
   services: initialServicesData,

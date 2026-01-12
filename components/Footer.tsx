@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEditableContent } from '../contexts/EditableContentContext';
 
 const SocialIcon: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
     <a href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-600 transition-colors duration-300">
@@ -7,14 +8,27 @@ const SocialIcon: React.FC<{ href: string; children: React.ReactNode }> = ({ hre
 );
 
 const Footer: React.FC = () => {
+  const { content } = useEditableContent();
+
+  if (!content) return null;
+
   return (
-    <footer className="bg-black text-white py-12">
+    <footer className="bg-black text-white py-12 border-t border-gray-900">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-center md:text-left">
             <div className="md:col-span-1 mb-6 md:mb-0">
-                 <h3 className="text-3xl font-bold text-red-600">
-                    V.S Vistorias
-                </h3>
+                <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+                    {content.logo && (
+                        <img 
+                            src={content.logo.src} 
+                            alt={content.logo.alt} 
+                            className="h-10 w-auto object-contain brightness-125" 
+                        />
+                    )}
+                    <h3 className="text-3xl font-bold text-red-600">
+                        V.S Vistorias
+                    </h3>
+                </div>
                 <p className="text-gray-400 mt-2">Segurança e credibilidade em cada laudo.</p>
                 <div className="flex justify-center md:justify-start space-x-4 mt-6">
                     <SocialIcon href="#">
@@ -44,7 +58,7 @@ const Footer: React.FC = () => {
                 <p className="text-gray-300">Sábado: 8:00 - 12:00</p>
             </div>
         </div>
-        <div className="border-t border-gray-800 pt-8 mt-8">
+        <div className="border-t border-gray-900 pt-8 mt-8">
           <p className="text-gray-500 text-center">
             &copy; {new Date().getFullYear()} V.S Vistorias. Todos os direitos reservados.
           </p>
