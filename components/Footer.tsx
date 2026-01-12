@@ -30,13 +30,13 @@ const Footer: React.FC = () => {
             </div>
             <div className="text-center md:text-left">
                 <h4 className="font-bold text-lg mb-4 text-red-600">Endereço</h4>
-                <p className="text-gray-300">Rua Exemplo, 123, Sala 45</p>
-                <p className="text-gray-300">Cidade, Estado - CEP 12345-678</p>
+                <p className="text-gray-300">Avenida Uru, N° 63</p>
+                <p className="text-gray-300">St. dos Afonsos, Goiânia - GO</p>
             </div>
             <div className="text-center md:text-left">
                 <h4 className="font-bold text-lg mb-4 text-red-600">Contato</h4>
                 <p className="text-gray-300">Email: contato@vsvistorias.com.br</p>
-                <p className="text-gray-300">Telefone: (11) 99999-8888</p>
+                <p className="text-gray-300">Telefone: (62) 99554-3173</p>
             </div>
             <div className="text-center md:text-left">
                 <h4 className="font-bold text-lg mb-4 text-red-600">Horário</h4>

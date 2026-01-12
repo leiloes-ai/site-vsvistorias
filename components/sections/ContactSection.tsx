@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import CTAButton from '../CTAButton';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+import { useEditableContent } from '../../contexts/EditableContentContext';
 
 const ContactSection: React.FC = () => {
   const [sectionRef, isVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+  const { content } = useEditableContent();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,6 +26,8 @@ const ContactSection: React.FC = () => {
     setFormData({ name: '', email: '', phone: '', service: '', message: '' });
   };
   
+  if (!content) return null;
+
   return (
     <section ref={sectionRef} className="bg-gray-50 py-20 text-gray-900 overflow-hidden">
       <div className="container mx-auto px-6">
@@ -77,17 +81,17 @@ const ContactSection: React.FC = () => {
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-bold text-red-600 mb-2">Endereço</h3>
-                <p className="text-gray-700">Rua Exemplo, 123, Sala 45, Cidade, Estado</p>
+                <p className="text-gray-700">Avenida Uru, N° 63, St. dos Afonsos, Goiânia- GO</p>
             </div>
-            <div className="w-full h-64 bg-gray-300 rounded-lg shadow-md">
+            <div className="w-full h-80 bg-gray-300 rounded-lg shadow-md overflow-hidden border-4 border-white">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.145533159044!2d-46.65653838502264!3d-23.56309938468208!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0x206d0585f0b1e4b0!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1620000000000!5m2!1spt-BR!2sbr"
+                src={content.mapEmbedUrl}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen={false}
                 loading="lazy"
-                title="Mapa de Localização"
+                title="Mapa de Localização V.S Vistorias"
               ></iframe>
             </div>
           </div>

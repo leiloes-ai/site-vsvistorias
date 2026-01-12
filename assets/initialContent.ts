@@ -55,4 +55,5 @@ export const initialContent = {
   heroBackground: AppImages.heroBackground,
   aboutTeam: AppImages.aboutTeam,
   services: initialServicesData,
+  mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3820.662704153833!2d-49.2731518!3d-16.7436069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935ef0ef55555555%3A0x861966a33f44358a!2sAv.%20Uru%2C%2063%20-%20Setor%20dos%20Afonsos%2C%20Aparecida%20de%20Goi%C3%A2nia%20-%20GO!5e0!3m2!1spt-BR!2sbr!4v1710000000000!5m2!1spt-BR!2sbr",
 };

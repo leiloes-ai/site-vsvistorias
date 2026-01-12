@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { initialContent } from '../assets/initialContent';
 
-// This is the "database" of the website.
-// To publish changes, the user will download the updated state and replace this file on their server.
-const CONTENT_FILE_URL = '/content.json';
+// Usamos um caminho relativo para maior compatibilidade.
+// No servidor (Hostinger), este arquivo deve estar na mesma pasta que o index.html.
+const CONTENT_FILE_URL = 'content.json';
 
 interface EditableContentContextType {
     isEditMode: boolean;
@@ -33,31 +33,41 @@ export const EditableContentProvider: React.FC<{ children: ReactNode }> = ({ chi
             setIsEditMode(true);
         }
 
-        // Agressive cache busting to ensure the latest content is always fetched.
-        fetch(`${CONTENT_FILE_URL}?v=${new Date().getTime()}`, {
-            cache: 'no-store', // Tells the browser not to use its cache
-            headers: {
-                'Pragma': 'no-cache', // HTTP 1.0 backward compatibility for proxies
-                'Cache-Control': 'no-store, no-cache, must-revalidate', // HTTP 1.1 cache control
-            },
-        })
-            .then(response => {
+        const loadContent = async () => {
+            const cacheBuster = `v=${new Date().getTime()}`;
+            const fetchOptions: RequestInit = {
+                cache: 'no-store',
+                headers: {
+                    'Pragma': 'no-cache',
+                    'Cache-Control': 'no-store, no-cache, must-revalidate',
+                },
+            };
+
+            try {
+                // Primeira tentativa: Raiz do servidor (onde index.html reside)
+                let response = await fetch(`${CONTENT_FILE_URL}?${cacheBuster}`, fetchOptions);
+
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    // Segunda tentativa: Pasta public (comum em ambiente de desenvolvimento local)
+                    response = await fetch(`public/${CONTENT_FILE_URL}?${cacheBuster}`, fetchOptions);
                 }
-                return response.json();
-            })
-            .then(data => {
-                setContent(data);
-            })
-            .catch(error => {
-                console.error("Failed to load content from server, falling back to initial content.", error);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setContent(data);
+                } else {
+                    console.warn("Arquivo content.json não encontrado nas rotas esperadas. Usando conteúdo inicial.");
+                    setContent(initialContent);
+                }
+            } catch (error) {
+                console.warn("Erro ao tentar carregar content.json, usando padrão do sistema.", error);
                 setContent(initialContent);
-            })
-            .finally(() => {
+            } finally {
                 setLoading(false);
-            });
-            
+            }
+        };
+
+        loadContent();
     }, []);
 
     return (
