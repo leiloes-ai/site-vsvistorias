@@ -66,6 +66,9 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, on
             const centerX = image.naturalWidth / 2;
             const centerY = image.naturalHeight / 2;
 
+            // Limpar o canvas antes de desenhar para garantir transparência
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             ctx.save();
             ctx.translate(-cropX, -cropY);
             ctx.translate(centerX, centerY);
@@ -88,21 +91,20 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, on
         if (!previewCanvasRef.current) {
             return;
         }
-        // Save with 90% quality for a good balance
-        const dataUrl = previewCanvasRef.current.toDataURL('image/jpeg', 0.9);
+        // Alterado para image/png para suportar transparência
+        const dataUrl = previewCanvasRef.current.toDataURL('image/png');
         onSave(dataUrl);
     };
     
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            // Prevent large files from being uploaded. 4MB limit.
             if (file.size > 4 * 1024 * 1024) {
                 alert('A imagem é muito grande! Por favor, escolha um arquivo menor que 4MB.');
                 return;
             }
 
-            setCrop(undefined); // Reset crop on new image
+            setCrop(undefined); 
             const reader = new FileReader();
             reader.addEventListener('load', () => setImgSrc(reader.result?.toString() || ''));
             reader.readAsDataURL(file);
@@ -122,13 +124,13 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, on
                 
                 <div className="p-6 flex-grow overflow-y-auto">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {/* Controles */}
                         <div className="md:col-span-1 space-y-6">
                              <div>
                                 <input type="file" accept="image/*" onChange={handleFileSelect} ref={fileInputRef} className="hidden" />
                                 <button onClick={() => fileInputRef.current?.click()} className="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
                                     Carregar Nova Imagem
                                 </button>
+                                <p className="text-xs text-gray-400 mt-2 text-center">Para logos, use imagens PNG com fundo transparente.</p>
                              </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-300 mb-2">Zoom</label>
@@ -157,23 +159,22 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, on
                             </div>
                              <div className="hidden md:block">
                                 <h3 className="text-lg font-bold text-white mb-2">Pré-visualização</h3>
-                                <canvas
-                                    ref={previewCanvasRef}
-                                    className="rounded-lg bg-slate-900 w-full"
-                                    style={{
-                                        objectFit: 'contain',
-                                        width: completedCrop ? `${completedCrop.width}px` : 'auto',
-                                        // FIX: Corrected a typo from `completed-crop` to `completedCrop`.
-                                        height: completedCrop ? `${completedCrop.height}px` : 'auto',
-                                        maxWidth: '100%',
-                                        maxHeight: '200px',
-                                        border: '1px solid #334155'
-                                    }}
-                                />
+                                <div className="bg-slate-900 rounded-lg p-4 flex items-center justify-center border border-slate-700 pattern-grid">
+                                    <canvas
+                                        ref={previewCanvasRef}
+                                        className="w-full"
+                                        style={{
+                                            objectFit: 'contain',
+                                            width: completedCrop ? `${completedCrop.width}px` : 'auto',
+                                            height: completedCrop ? `${completedCrop.height}px` : 'auto',
+                                            maxWidth: '100%',
+                                            maxHeight: '200px'
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </div>
 
-                        {/* Editor de Imagem */}
                         <div className="md:col-span-2 bg-slate-900 p-2 rounded-lg flex items-center justify-center">
                            {imgSrc ? (
                                 <ReactCrop
@@ -203,6 +204,12 @@ const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ isOpen, onClose, on
                     <button onClick={handleSaveClick} className="bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">Salvar Alterações</button>
                 </div>
             </div>
+            <style>{`
+                .pattern-grid {
+                    background-image: radial-gradient(#334155 1px, transparent 1px);
+                    background-size: 10px 10px;
+                }
+            `}</style>
         </div>
     );
 };

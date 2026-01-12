@@ -58,13 +58,13 @@ const Header: React.FC<HeaderProps> = ({ sectionRefs, scrollToSection }) => {
         <div className="relative flex items-center group">
           <button 
             onClick={() => handleNavClick(sectionRefs.home)} 
-            className="flex items-center gap-3 text-2xl font-bold text-red-600 tracking-tight hover:text-red-500 transition-colors"
+            className="flex items-center gap-4 text-2xl md:text-3xl font-bold text-red-600 tracking-tight hover:text-red-500 transition-colors"
           >
             {content.logo && (
               <img 
                 src={content.logo.src} 
                 alt={content.logo.alt} 
-                className="h-10 md:h-12 w-auto object-contain" 
+                className="h-16 md:h-24 w-auto object-contain" 
               />
             )}
             <span>V.S Vistorias</span>
@@ -73,10 +73,10 @@ const Header: React.FC<HeaderProps> = ({ sectionRefs, scrollToSection }) => {
           {isEditMode && (
             <button
               onClick={() => setIsEditorOpen(true)}
-              className="ml-2 bg-red-600 text-white p-1 rounded-full shadow-lg hover:bg-red-700 transition-colors"
+              className="ml-3 bg-red-600 text-white p-2 rounded-full shadow-lg hover:bg-red-700 transition-colors"
               title="Trocar Logo"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
             </button>

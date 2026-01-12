@@ -1,6 +1,6 @@
 export const AppImages = {
   logo: {
-    src: 'https://placehold.co/400x400/white/e53e3e?text=VS',
+    src: 'https://placehold.co/400x400/111827/e53e3e?text=VS',
     alt: 'Logo V.S Vistorias - Lupa e Veículo',
   },
   heroBackground: {

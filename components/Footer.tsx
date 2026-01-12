@@ -17,19 +17,19 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-center md:text-left">
             <div className="md:col-span-1 mb-6 md:mb-0">
-                <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+                <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4 mb-4">
                     {content.logo && (
                         <img 
                             src={content.logo.src} 
                             alt={content.logo.alt} 
-                            className="h-10 w-auto object-contain brightness-125" 
+                            className="h-20 w-auto object-contain brightness-125" 
                         />
                     )}
                     <h3 className="text-3xl font-bold text-red-600">
                         V.S Vistorias
                     </h3>
                 </div>
-                <p className="text-gray-400 mt-2">Segurança e credibilidade em cada laudo.</p>
+                <p className="text-gray-400 mt-2 text-center md:text-left">Segurança e credibilidade em cada laudo.</p>
                 <div className="flex justify-center md:justify-start space-x-4 mt-6">
                     <SocialIcon href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-4.481 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.59-11.018-3.714v-2.155z"/></svg>
